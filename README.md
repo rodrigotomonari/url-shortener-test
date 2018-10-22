@@ -1,5 +1,80 @@
 # Url Shortener Code Test
 
+## Instructions
+
+**Using Docker**
+
+The easiest way to run the project is using Docker:
+
+```
+# Replace the IMAGE_NAME with a proper name
+
+$ docker build -t IMAGE_NAME .
+$ docker run -p 3000:3000 IMAGE_NAME rails s -b 0.0.0.0
+```
+
+And to execute the tests run:
+
+`$ docker run IMAGE_NAME bin/rspec`
+
+**Installing without Docker**
+
+To install on the local machine, some required packages have to be installed
+(see Requirements section)
+
+```
+$ bundle install
+$ yarn
+$ rails s
+```
+And to execute the tests run:
+
+`$ bin/rspec`
+
+## Requirements
+
+- Ruby (see .ruby-version)
+- Node
+- Yarn
+
+## Using the application
+
+To use the application, access the URL `http://localhost:3000` in the web browser
+and use the frontend interface.
+
+Or send requests using curl to the endpoints:
+
+```
+$ curl localhost:3000 -XPOST -d '{ "url": "http://www.farmdrop.com" }'
+
+$ curl -v localhost:3000/SHORT_URL
+```
+
+## Considerations and explanations
+
+The main logic of the application is in the class **UrlShortener** located in
+**app/models/url_shortener.rb**. The class is responsible for shortening the URLs.
+The class depends on the **storage** abstraction, that is responsible for
+*persisting* the URLs. This way it's possible to use different persistence
+storage without changing the **UrlShortener** class.
+
+So for persisting the URLs in memory, as the tests required, was created the
+storage MemoryStorage located in **app/models/storages/memory_storage.rb**,
+that uses a class instance.
+
+The algorithm to generate the short_url is quite simple. It generates a random
+key for all new URL. Maybe the algorithm could be improved to not generate a
+new short_url for URLs already stored. Or it could always generate the same
+short_url for the same URL, like a hash algorithm. But this improvements would
+depend on a better understanding of the applicabilities of the application.
+
+The frontend application was made using VueJS. All the components are located
+in the folder `app/javascript/`.
+
+Bootstrap library was used to style the application.
+
+## The Test
+
 Without using an external database, we'd like you to create a URL shortening
 service. The URLs do not need to persist between restarts, but should be
 shareable between different clients while the server is running.
