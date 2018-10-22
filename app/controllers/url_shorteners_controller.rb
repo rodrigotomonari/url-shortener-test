@@ -1,6 +1,13 @@
 class UrlShortenersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  def index
+    respond_to do |format|
+      format.html
+      format.json { render json: UrlShortener.new.all }
+    end
+  end
+
   def create
     render json: UrlShortener.new.store(url_param)
   end

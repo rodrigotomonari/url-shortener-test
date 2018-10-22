@@ -62,4 +62,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.webpacker.check_yarn_integrity = false
+
+  config.web_console.whitelisted_ips = ['172.16.0.0/12', '192.168.0.0/16']
 end

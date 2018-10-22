@@ -18,14 +18,13 @@ RSpec.describe UrlShortener, type: :model do
   describe "#retrieve" do
     it "returns the URL of a short URL" do
       item = subject.store(url)
-
       expect(subject.retrieve(item[:short_url])).to eq(url)
     end
   end
 
   describe "#all" do
     it "returns a hash of short URLs and URLs" do
-      expect(subject.all).to be_a(Hash)
+      expect(subject.all).to be_a(Array)
     end
   end
 end

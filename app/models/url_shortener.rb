@@ -20,13 +20,17 @@ class UrlShortener
   end
 
   def retrieve(key)
+    key = normalize_key(key)
+
     return false unless storage.has? key
 
     storage.retrieve(key)
   end
 
   def all
-    storage.all
+    storage.all.map do |k, v|
+      { short_url: k, url: v }
+    end
   end
 
   private
@@ -43,5 +47,9 @@ class UrlShortener
     return url if url =~ %r{^https?://}
 
     'http://' + url
+  end
+
+  def normalize_key(key)
+    '/' + key.delete('/')
   end
 end
