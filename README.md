@@ -2,6 +2,21 @@
 
 ## Instructions
 
+**Using docker-compose**
+
+The easiest way to run the project is using *docker-compose*
+
+Inside the project folder run:
+
+`$ docker-compose up`
+
+And to execute the tests run:
+
+`$ docker-compose run -e "RAILS_ENV=test" web bin/rspec`
+
+The command above will generate a docker image, start a container with the image,
+and execute rails on port 3000
+
 **Using Docker**
 
 The easiest way to run the project is using Docker:
